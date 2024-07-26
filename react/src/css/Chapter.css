@@ -5,13 +5,17 @@
 
 h1 {
     text-align: center;
+    margin: 10px 0px;
 }
 
 h2 {
     text-align: center;
+    margin: 10px 0px;
 }
 
 p {
+    margin: 5px 10px;
     text-align: left;
     text-wrap: wrap;
+    word-wrap: break-word;
 }
