@@ -1,23 +1,21 @@
 package com.example.demo.rest;
 
 import com.example.demo.App;
+import com.example.demo.services.ChapterRepository;
 import com.example.demo.utils.JsonConverter;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ChapterRestApi {
-
-    @GetMapping("/getChapter")
+    @GetMapping("/content/{bookId}/{chapterId}")
     @CrossOrigin(origins = "*")
-    public String GetChapter() {
-        return "test chapter";
+    public String GetChapter(@PathVariable int bookId, @PathVariable int chapterId) {
+        return ChapterRepository.GetInstance().GetChapter(bookId, chapterId);
     }
 
-    @GetMapping("/getBook")
+    @GetMapping("/content/{bookId}")
     @CrossOrigin(origins = "*")
-    public String GetBook() {
-        return "test book";
+    public String GetBook(@PathVariable int bookId) {
+        return ChapterRepository.GetInstance().GetBook(bookId);
     }
 }

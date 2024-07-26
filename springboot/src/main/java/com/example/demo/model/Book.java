@@ -23,6 +23,22 @@ public class Book {
         this.chapterList = chapterList;
     }
 
+    public int getBookId() {
+        return bookId;
+    }
+
+    public String getBookTitle() {
+        return bookTitle;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public List<Integer> getChapterList() {
+        return chapterList;
+    }
+
     public String ToJson() {
         try {
             return JsonConverter.GetMapper().writeValueAsString(this);
