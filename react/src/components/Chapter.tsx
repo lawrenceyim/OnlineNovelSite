@@ -1,3 +1,4 @@
+import { useState } from "react"
 import ChapterNavBar from "./ChapterNavBar"
 
 export interface ChapterProp {
@@ -10,11 +11,12 @@ export interface ChapterProp {
 }
 
 export default function Chapter(prop: ChapterProp) {
+    const [currentChapter, setCurrentChapter] = useState<number>(prop.chapterId)
     return <>
         <h1>{prop.bookTitle}</h1>
-        <ChapterNavBar bookId={prop.bookId} currentChapterId={prop.chapterId} chapterList={prop.chapterList}/>
-        <h2>{prop.bookTitle}</h2>
+        <ChapterNavBar bookId={prop.bookId} currentChapterId={currentChapter} chapterList={prop.chapterList} setChapter={setCurrentChapter}/>
+        <h2>{prop.chapterTitle}</h2>
         <p>{prop.body}</p>
-        <ChapterNavBar bookId={prop.bookId} currentChapterId={prop.chapterId} chapterList={prop.chapterList}/>
+        <ChapterNavBar bookId={prop.bookId} currentChapterId={currentChapter} chapterList={prop.chapterList} setChapter={setCurrentChapter}/>
     </>
 }

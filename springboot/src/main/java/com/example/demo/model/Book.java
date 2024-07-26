@@ -11,12 +11,15 @@ public class Book {
     private int bookId;
     @JsonProperty("bookTitle")
     private String bookTitle;
+    @JsonProperty("authors")
+    private List<String> authors;
     @JsonProperty("chapterList")
     private List<Integer> chapterList;
 
-    public Book(int bookId, String bookTitle, List<Integer> chapterList) {
+    public Book(int bookId, String bookTitle, List<String> authors, List<Integer> chapterList) {
         this.bookId = bookId;
         this.bookTitle = bookTitle;
+        this.authors = authors;
         this.chapterList = chapterList;
     }
 

@@ -1,0 +1,41 @@
+/* Container for the dropdown */
+.dropDownContainer {
+    position: relative; /* This is necessary for positioning the dropdown menu */
+    display: inline-block; /* Keeps the dropdown container inline with the button */
+    min-width: 25%;
+}
+
+/* Style for the dropdown menu */
+.dropDownMenu {
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%; /* Position below the button */
+    left: 0; /* Align with the left edge of the button */
+
+}
+
+.navBarButton {
+    text-wrap: nowrap;
+    padding: 10px;
+    margin: 0px 5px;
+    padding: 10px;
+    min-width: 25%;
+}
+
+.dropDownButton {
+    position: relative;
+    width: 100%;
+    text-wrap: nowrap;
+    padding: 10px;
+}
+
+.activeDropDownButton {
+    z-index: 100;
+}
+
+.inactiveDropDownButton {
+    z-index: 0;
+}

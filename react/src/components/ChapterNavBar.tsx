@@ -1,16 +1,33 @@
-import { useState } from "react"
+import { useState } from "react";
+import '../css/ChapterNavBar.css';
 
 export interface ChapterNavBarProp {
     bookId: number,
     currentChapterId: number,
-    chapterList: number[]
+    chapterList: number[],
+    setChapter: (chapterId: number) => void;
 }
 
 export default function ChapterNavBar(prop: ChapterNavBarProp) {
+    const previousButton: JSX.Element = <button
+        className="navBarButton"
+        onClick={() => prop.setChapter(prop.currentChapterId - 1)}>
+        Previous Chapter
+    </button>;
+
+    const nextbutton: JSX.Element = <button
+        className="navBarButton"
+        onClick={() => prop.setChapter(prop.currentChapterId + 1)}>
+        Next Chapter
+    </button>;
+
+    const hasPreviousChapter = prop.chapterList.findIndex(chapter => chapter === prop.currentChapterId) > 0;
+    const hasNextChapter = prop.chapterList.findIndex(chapter => chapter === prop.currentChapterId) < prop.chapterList.length - 1;
+
     return <>
-        <button>Previous Chapter</button>
+        {hasPreviousChapter && previousButton}
         <ChapterDropDownMenu {...prop} />
-        <button>Next Chapter</button>
+        {hasNextChapter && nextbutton}
     </>
 }
 
@@ -26,24 +43,43 @@ function ChapterDropDownMenu(prop: ChapterNavBarProp) {
     }
 
     function LoadNewChapter(chapterId: number) {
-        console.log(chapterId + "PRESSED");
-        // TODO
+        prop.setChapter(chapterId);
     }
 
     if (expanded) {
         const list = prop.chapterList.map(chapterId => {
             if (chapterId == prop.currentChapterId) {
-                return <button onClick={CloseList} key={chapterId}>Chapter {chapterId}</button>;
+                return <li key={chapterId}><button
+                    className="dropDownButton activeDropDownButton"
+                    onClick={CloseList}>
+                    Chapter {chapterId}
+                </button></li>;
             }
-            return <button onClick={() => LoadNewChapter(chapterId)} key={chapterId}>Chapter {chapterId}</button>;
+            
+            return <li key={chapterId}><button
+                className="dropDownButton activeDropDownButton"
+                onClick={() => {
+                    CloseList();
+                    LoadNewChapter(chapterId)
+                }}>
+                Chapter {chapterId}
+            </button></li>;
         });
 
-        return <ul>
-            {list}
-        </ul>
+        return <span className="dropDownContainer">
+            <button
+                className="dropDownButton inactiveDropDownButton"
+                onClick={CloseList}>
+                Chapter {prop.currentChapterId}
+            </button>
+
+            <ul className="dropDownMenu">
+                {list}
+            </ul>
+        </span>
     }
 
     return <>
-        <button onClick={ExpandList} >Chapter {prop.currentChapterId}</button>
+        <span className="dropDownContainer"><button onClick={ExpandList} className="dropDownButton inactiveDropDownButton">Chapter {prop.currentChapterId}</button></span>
     </>
 }
