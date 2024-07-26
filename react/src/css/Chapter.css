@@ -1,0 +1,17 @@
+.chapterPage {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    text-align: left;
+    text-wrap: wrap;
+}

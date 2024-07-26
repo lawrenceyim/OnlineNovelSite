@@ -24,11 +24,11 @@ export default function ChapterNavBar(prop: ChapterNavBarProp) {
     const hasPreviousChapter = prop.chapterList.findIndex(chapter => chapter === prop.currentChapterId) > 0;
     const hasNextChapter = prop.chapterList.findIndex(chapter => chapter === prop.currentChapterId) < prop.chapterList.length - 1;
 
-    return <>
+    return <div className="navBar">
         {hasPreviousChapter && previousButton}
         <ChapterDropDownMenu {...prop} />
         {hasNextChapter && nextbutton}
-    </>
+    </div>
 }
 
 function ChapterDropDownMenu(prop: ChapterNavBarProp) {
@@ -55,7 +55,7 @@ function ChapterDropDownMenu(prop: ChapterNavBarProp) {
                     Chapter {chapterId}
                 </button></li>;
             }
-            
+
             return <li key={chapterId}><button
                 className="dropDownButton activeDropDownButton"
                 onClick={() => {

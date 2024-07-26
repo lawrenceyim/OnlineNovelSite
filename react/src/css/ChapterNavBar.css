@@ -1,3 +1,10 @@
+.navBar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+
 /* Container for the dropdown */
 .dropDownContainer {
     position: relative; /* This is necessary for positioning the dropdown menu */
