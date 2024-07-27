@@ -73,7 +73,7 @@ export default function Chapter(prop: ChapterProp) {
         chapterList={bookResponse.chapterList}
         setChapter={(chapterId: number) => setChapterResponse({ ...chapterResponse, chapterId })}
       />
-      <h2>{chapterResponse.chapterTitle}</h2>
+      <h2>{chapterResponse.chapterId}</h2>
       {paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
       <ChapterNavBar
         bookId={bookResponse.bookId}
