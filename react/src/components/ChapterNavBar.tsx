@@ -42,10 +42,6 @@ function ChapterDropDownMenu(prop: ChapterNavBarProp) {
         setExpanded(false);
     }
 
-    function LoadNewChapter(chapterId: number) {
-        prop.setChapter(chapterId);
-    }
-
     if (expanded) {
         const list = prop.chapterList.map(chapterId => {
             if (chapterId == prop.currentChapterId) {
@@ -60,7 +56,7 @@ function ChapterDropDownMenu(prop: ChapterNavBarProp) {
                 className="dropDownButton activeDropDownButton"
                 onClick={() => {
                     CloseList();
-                    LoadNewChapter(chapterId)
+                    prop.setChapter(chapterId)
                 }}>
                 Chapter {chapterId}
             </button></li>;

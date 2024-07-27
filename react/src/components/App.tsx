@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <Chapter chapterId={1} bookId={1}/>
+      <Chapter chapterId={1} bookId={2}/>
     </>
   )
 }
