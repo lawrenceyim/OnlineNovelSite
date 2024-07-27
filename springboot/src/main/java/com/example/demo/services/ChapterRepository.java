@@ -5,14 +5,16 @@ import com.example.demo.model.Chapter;
 import com.example.demo.utils.FakeBooksAndChapters;
 import com.example.demo.utils.JsonConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 public class ChapterRepository {
     public static ChapterRepository instance;
-    private HashMap<Integer, Book> books = new HashMap<>();
-    private HashMap<Book, HashMap<Integer, Chapter>> chapters = new HashMap<>();
+    private final HashMap<Integer, Book> books = new HashMap<>();
+    private final HashMap<Book, HashMap<Integer, Chapter>> chapters = new HashMap<>();
 
     private ChapterRepository() {
         FakeBooksAndChapters.InitializeBooksAndChapters(books, chapters);
@@ -25,37 +27,35 @@ public class ChapterRepository {
         return instance;
     }
 
-    public String GetChapter(int bookId, int chapterId) {
+    public ResponseEntity<String> GetChapter(int bookId, int chapterId) {
         Optional<Book> book = Optional.ofNullable(books.get(bookId));
         Optional<HashMap<Integer, Chapter>> chapterList = book.map(b -> chapters.get(b));
         Optional<Chapter> chapter = chapterList.map(cl -> cl.get(chapterId));
         if (chapter.isPresent()) {
             try {
-                return JsonConverter.GetMapper().writeValueAsString(chapter.get());
+                return ResponseEntity.ok().body(JsonConverter.GetMapper().writeValueAsString(chapter.get()));
             } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
+                return ResponseEntity.internalServerError().body("Server error.");
             }
         }
-        return """
-                    {
-                        "error": "No chapter found."
-                    }
-                """;
+        return ResponseEntity.badRequest().body("Chapter not found.");
     }
 
-    public String GetBook(int bookId) {
+    public ResponseEntity<String> GetBook(int bookId) {
         Optional<Book> book = Optional.of(books.get(bookId));
-        if (book.isPresent()) {
-            try {
-                return JsonConverter.GetMapper().writeValueAsString(book.get());
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException();
-            }
+        try {
+            return ResponseEntity.ok().body(JsonConverter.GetMapper().writeValueAsString(book.get()));
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.internalServerError().body("Server error.");
         }
-        return """
-                    {
-                        "error": "No book found."
-                    }
-                """;
+    }
+
+    public ResponseEntity<String> GetBooks() {
+        List<Book> bookList = books.values().stream().toList();
+        try {
+            return ResponseEntity.ok().body(JsonConverter.GetMapper().writeValueAsString(bookList));
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.internalServerError().body("Server error.");
+        }
     }
 }
